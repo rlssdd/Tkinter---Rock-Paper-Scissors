@@ -1,0 +1,78 @@
+import tkinter.font
+from tkinter import *
+import random
+
+window = Tk()
+window.title("Rock Paper Scissors")
+window.geometry("500x450")
+lbl = Label(window, text="Rock Paper Scissors")
+lbl.config(font=("Courier", 14), foreground="red")
+txt = Text(window, height=5, width=100)
+my_choice = ""
+computer_action = ""
+
+
+def computer_choice():
+    global computer_action
+    possible_actions = ["Rock", "Paper", "Scissors"]
+    computer_action = random.choice(possible_actions)
+
+
+def btnRockCLick():
+    global my_choice
+    my_choice = btnRock["text"]
+    game_on()
+
+
+def btnPaperClick():
+    global my_choice
+    my_choice = btnPaper["text"]
+    game_on()
+
+
+def btnScissorsClick():
+    global my_choice
+    my_choice = btnScissors["text"]
+    game_on()
+
+
+font = tkinter.font.Font(family="Lucida Grande", size=10)
+btnRock = Button(window, text="Rock  👊🏼", bd="10", height=2, width=10, font=font, command=btnRockCLick)
+btnPaper = Button(window, text="Paper 🖐🏼", bd="10", height=2, width=10, font=font, command=btnPaperClick)
+btnScissors = Button(window, text="Scissors 🖖🏽", bd="10", height=2, width=10, font=font, command=btnScissorsClick)
+txt = Text(window, height=5, width=50)
+txt.grid(padx=50, pady=5)
+txt.tag_configure("center", justify="center")
+
+
+def game_on():
+    global txt
+    txt.delete("1.0", "end")
+    if my_choice == computer_action:
+        txt.insert(END, f"Both players selected {my_choice}. It's a tie!")
+    elif my_choice == btnRock["text"]:
+        if computer_action == "Scissors":
+            txt.insert(END, "Rock smashes scissors! You win!")
+        else:
+            txt.insert(END, "Paper covers rock! You lose.")
+    elif my_choice == btnPaper["text"]:
+        if computer_action == "Rock":
+            txt.insert(END, "Paper covers rock! You win!")
+        else:
+            txt.insert(END, "Scissors cuts paper! You lose.")
+    elif my_choice == btnScissors["text"]:
+        if computer_action == "Paper":
+            txt.insert(END, "Scissors cuts paper! You win!")
+        else:
+            txt.insert(END, "Rock smashes scissors! You lose.")
+    computer_choice()
+
+
+lbl.grid(row=0, column=0, pady=50)
+btnRock.grid(row=1, column=0, pady=5)
+btnPaper.grid(row=2, column=0, pady=5)
+btnScissors.grid(row=3, column=0, pady=5)
+txt.grid(row=4, column=0)
+
+
+window.mainloop()
